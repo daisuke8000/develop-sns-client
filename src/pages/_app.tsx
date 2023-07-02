@@ -1,12 +1,15 @@
 import '@/styles/globals.css'
 import type {AppProps} from 'next/app'
 import Navbar from "@/components/NavBar";
+import {AuthProvider} from "@/context/auth";
 
 export default function App({Component, pageProps}: AppProps) {
     return (
-        <div>
-            <Navbar/>
-            <Component {...pageProps} />
-        </div>
+        <AuthProvider>
+            <div>
+                <Navbar/>
+                <Component {...pageProps} />
+            </div>
+        </AuthProvider>
     )
 }

@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 import Head from "next/head";
+import apiClient from "@/lib/apiClient";
+import axios from "axios";
+import {useRouter} from "next/router";
 
 const SignUp = () => {
     //  state
@@ -7,10 +10,25 @@ const SignUp = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const router = useRouter();
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // api throw
-        // console.log(name, email, password);
+        try {
+            const data = await apiClient.post("/auth/signup", {
+                username: name,
+                email,
+                password,
+            });
+            await router.push("/login");
+        } catch (e) {
+            if (axios.isAxiosError(e) && e.response) {
+                alert(e.message);
+            } else {
+                alert("error, is unknoen")
+            }
+        }
     }
 
     return (
