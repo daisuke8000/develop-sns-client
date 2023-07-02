@@ -24,13 +24,11 @@ const Login = () => {
             }).then((res: AxiosResponse) => {
                 const token = res.data.token
                 login(token)
-                console.log(res.statusText)
                 router.push("/")
             });
         } catch (error) {
             alert("error")
         }
-        // console.log(name, email, password);
     }
     return (
         <div

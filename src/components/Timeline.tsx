@@ -10,13 +10,15 @@ const Timeline = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(postText)
         try {
             const res = await apiClient.post("/posts/post", {
                 content: postText,
             })
             setLatestPost((prev) => [res.data, ...prev]);
-            res.status === 201 ? setPostText(() => "") : console.log("error")
+            if (res.status === 201) {
+                setPostText(() => "")
+            }
+            return
         } catch (error: any) {
             const errMsg = error.message
             alert(errMsg)
@@ -30,7 +32,7 @@ const Timeline = () => {
         const fetchLatestPost = async () => {
             try {
                 const res = await apiClient.get("/posts/get_latest_post")
-                setLatestPost(res.data)
+                setLatestPost(() => res.data)
             } catch (err) {
                 console.error(err)
             }

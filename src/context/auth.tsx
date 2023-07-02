@@ -33,8 +33,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
         if (!token) return;
         apiClient.defaults.headers["Authorization"] = `Bearer ${token}`;
         apiClient.get("/users/find").then((res) => {
-            setUser(res.data)
-            console.log(res.data)
+            setUser(res.data.user)
         }).catch((err) => {
             alert(err.message)
             console.error(err)
@@ -47,7 +46,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
         apiClient.defaults.headers["Authorization"] = `Bearer ${token}`;
         try {
             apiClient.get("/users/find").then((res) => {
-                setUser(res.data)
+                setUser(res.data.user)
             })
         } catch (error: any) {
             alert(error.message)
